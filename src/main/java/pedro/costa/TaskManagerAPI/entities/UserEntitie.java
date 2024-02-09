@@ -4,17 +4,22 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import lombok.AllArgsConstructor;
 
 import java.util.Date;
 import java.util.regex.Pattern;
 @Entity
 @Table(name = "Users")
-public class UserEntitie extends BaseEntitie {
+public class UserEntitie extends BaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date birthday ;
     private String login  ;
     private String password ;
     private String email ;
+
+    public UserEntitie(Long id, String name, String description, Date createdAt) {
+        super( name, description);
+    }
 
     public Date getBirthday() {
         return birthday;

@@ -2,65 +2,64 @@ package pedro.costa.TaskManagerAPI.repository;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import pedro.costa.TaskManagerAPI.entities.TaskEntitie;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import pedro.costa.TaskManagerAPI.entities.TaskEntity;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
+@DataJpaTest
 class TaskRepositoryTest {
-    @Mock
-    TaskRepository taskRepository;
 
-    @InjectMocks
-    TaskEntitie task;
+    @Autowired
+    private TaskRepository taskRepository;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this);
     }
 
     @Test
     void testSave() {
         // Arrange
-        TaskEntitie taskToSave = new TaskEntitie("pending", null, "high", "John Doe");
-        when(taskRepository.save(taskToSave)).thenReturn(taskToSave);
+        TaskEntity taskToSave = new TaskEntity();
 
         // Act
-        TaskEntitie savedTask = taskRepository.save(taskToSave);
+        TaskEntity savedTask = taskRepository.save(taskToSave);
 
         // Assert
         assertNotNull(savedTask);
-        assertEquals(taskToSave, savedTask);
+        assertNotNull(savedTask.getId());
     }
 
     @Test
     void testFindById() {
         // Arrange
-        Long taskId = 1L;
-        when(taskRepository.findById(taskId)).thenReturn(Optional.of(task));
+        TaskEntity taskToSave = new TaskEntity();
+        TaskEntity savedTask = taskRepository.save(taskToSave);
+        Long taskId = savedTask.getId();
 
         // Act
-        Optional<TaskEntitie> foundTask = taskRepository.findById(taskId);
+        Optional<TaskEntity> foundTask = taskRepository.findById(taskId);
 
         // Assert
         assertTrue(foundTask.isPresent());
-        assertEquals(task, foundTask.get());
+        assertEquals(savedTask, foundTask.get());
     }
 
     @Test
     void testDeleteById() {
         // Arrange
-        Long taskId = 1L;
+        TaskEntity taskToSave = new TaskEntity();
+        TaskEntity savedTask = taskRepository.save(taskToSave);
+        Long taskId = savedTask.getId();
 
         // Act
         taskRepository.deleteById(taskId);
 
         // Assert
-        verify(taskRepository, times(1)).deleteById(taskId);
+
+        assertFalse(taskRepository.findById(taskId).isPresent());
     }
 }

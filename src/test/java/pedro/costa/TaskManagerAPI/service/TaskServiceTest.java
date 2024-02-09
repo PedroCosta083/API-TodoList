@@ -7,10 +7,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.data.domain.Sort;
-import pedro.costa.TaskManagerAPI.entities.TaskEntitie;
+import pedro.costa.TaskManagerAPI.entities.TaskEntity;
 import pedro.costa.TaskManagerAPI.repository.TaskRepository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,27 +33,27 @@ class TaskServiceTest {
     @Test
     void testCreate() {
         // Arrange
-        TaskEntitie task = new TaskEntitie("pending", null, "high", "John Doe");
+        TaskEntity task = new TaskEntity();
 
         // Act
         taskService.create(task);
 
         // Assert
-        ArgumentCaptor<TaskEntitie> argumentCaptor = ArgumentCaptor.forClass(TaskEntitie.class);
+        ArgumentCaptor<TaskEntity> argumentCaptor = ArgumentCaptor.forClass(TaskEntity.class);
         verify(taskRepository, times(1)).save(argumentCaptor.capture());
-        TaskEntitie capturedTask = argumentCaptor.getValue();
+        TaskEntity capturedTask = argumentCaptor.getValue();
         assertEquals(task, capturedTask);
     }
 
     @Test
     void testList() {
         // Arrange
-        List<TaskEntitie> expectedTasks = new ArrayList<>();
-        expectedTasks.add(new TaskEntitie("pending", null, "high", "John Doe"));
+        List<TaskEntity> expectedTasks = new ArrayList<>();
+        expectedTasks.add(new TaskEntity());
         when(taskRepository.findAll(any(Sort.class))).thenReturn(expectedTasks);
 
         // Act
-        List<TaskEntitie> actualTasks = taskService.list();
+        List<TaskEntity> actualTasks = taskService.list();
 
         // Assert
         assertEquals(expectedTasks, actualTasks);
@@ -61,15 +62,15 @@ class TaskServiceTest {
     @Test
     void testUpdate() {
         // Arrange
-        TaskEntitie task = new TaskEntitie("pending", null, "high", "John Doe");
+        TaskEntity task = new TaskEntity();
 
         // Act
         taskService.update(task);
 
         // Assert
-        ArgumentCaptor<TaskEntitie> argumentCaptor = ArgumentCaptor.forClass(TaskEntitie.class);
+        ArgumentCaptor<TaskEntity> argumentCaptor = ArgumentCaptor.forClass(TaskEntity.class);
         verify(taskRepository, times(1)).save(argumentCaptor.capture());
-        TaskEntitie capturedTask = argumentCaptor.getValue();
+        TaskEntity capturedTask = argumentCaptor.getValue();
         assertEquals(task, capturedTask);
     }
 

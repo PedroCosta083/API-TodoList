@@ -2,7 +2,6 @@ package pedro.costa.TaskManagerAPI.service;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import pedro.costa.TaskManagerAPI.entities.TaskEntitie;
 import pedro.costa.TaskManagerAPI.entities.UserEntitie;
 import pedro.costa.TaskManagerAPI.repository.TaskRepository;
 import pedro.costa.TaskManagerAPI.repository.UserRepository;

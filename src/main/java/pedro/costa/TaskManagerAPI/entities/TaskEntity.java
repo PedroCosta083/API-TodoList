@@ -1,47 +1,64 @@
 package pedro.costa.TaskManagerAPI.entities;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import lombok.*;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import java.util.Date;
 
-@MappedSuperclass
-@Data // Gera automaticamente getter, setter, equals(), hashCode() e toString()
-@NoArgsConstructor // Gera um construtor sem argumentos
-public class BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
-    private String description;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createAt;
+@Entity
+@Table(name = "Tasks")
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+public class TaskEntity extends BaseEntity {
+    @Getter
+    @Setter
+    private String status;
+    @Temporal(TemporalType.DATE)
+    @Getter
+    @Setter
+    private Date dueDate;
+    @Getter
+    @Setter
+    private String priority;
+    @Getter
+    @Setter
+    private String responsible;
 
-    public BaseEntity() {
-        validate();
+    public TaskEntity(String name, String description, String status, Date dueDate, String priority, String responsible) {
+        super(name, description);
+        this.setStatus(status);
+        this.setDueDate(dueDate);
+        this.setPriority(priority);
+        this.setResponsible(responsible);
+        this.validate();
     }
 
+
+
+    @Override
     public void validate() {
-        if (id == null) {
-            throw new IllegalArgumentException("ID is required");
+        super.validate();
+        if (this.status == null || this.status.isEmpty()) {
+            throw new IllegalArgumentException("Status is null or empty");
         }
 
-        if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("Name is required");
+        if (this.dueDate == null) {
+            throw new IllegalArgumentException("Due date is required");
         }
 
-        if (description == null || description.isEmpty()) {
-            throw new IllegalArgumentException("Description is required");
+        if (this.priority == null || priority.isEmpty()) {
+            throw new IllegalArgumentException("Priority is required");
         }
 
-        if (createAt == null) {
-            throw new IllegalArgumentException("CreateAt date cannot be null");
+        if (this.responsible == null) {
+            throw new IllegalArgumentException("Responsible is required");
+        }
+
+        if (this.dueDate.before(super.getCreatedAt())) {
+            throw new IllegalArgumentException("Due date cannot be before creation date");
         }
     }
 }

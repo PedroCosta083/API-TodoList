@@ -2,7 +2,7 @@ package pedro.costa.TaskManagerAPI.service;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import pedro.costa.TaskManagerAPI.entities.TaskEntitie;
+import pedro.costa.TaskManagerAPI.entities.TaskEntity;
 import pedro.costa.TaskManagerAPI.repository.TaskRepository;
 
 import java.util.List;
@@ -15,19 +15,19 @@ public class TaskService {
         this.taskRepository = taskRepository;
     }
 
-    public List<TaskEntitie>create(TaskEntitie task){
+    public List<TaskEntity>create(TaskEntity task){
         taskRepository.save(task);
         return list();
     }
-    public List<TaskEntitie>list(){
+    public List<TaskEntity>list(){
         Sort sort = Sort.by("priority").descending().and(Sort.by("name").ascending());
        return taskRepository.findAll(sort);
     }
-    public List<TaskEntitie>update(TaskEntitie task){
+    public List<TaskEntity>update(TaskEntity task){
         taskRepository.save(task);
         return list();
     }
-    public List<TaskEntitie>delete(Long id){
+    public List<TaskEntity>delete(Long id){
         taskRepository.deleteById(id);
         return list();
     }

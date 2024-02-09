@@ -7,10 +7,11 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import pedro.costa.TaskManagerAPI.entities.TaskEntitie;
+import pedro.costa.TaskManagerAPI.entities.TaskEntity;
 import pedro.costa.TaskManagerAPI.service.TaskService;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -31,11 +32,11 @@ class TaskControllerTest {
     @Test
     void testCreateTask() {
         // Arrange
-        TaskEntitie task = new TaskEntitie("pending", null, "high", "John Doe");
+        TaskEntity task = new TaskEntity();
         when(taskService.create(task)).thenReturn(List.of(task));
 
         // Act
-        ResponseEntity<List<TaskEntitie>> responseEntity = taskController.create(task);
+        ResponseEntity<List<TaskEntity>> responseEntity = taskController.create(task);
 
         // Assert
         assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
@@ -45,12 +46,12 @@ class TaskControllerTest {
     @Test
     void testListTasks() {
         // Arrange
-        List<TaskEntitie> expectedTasks = new ArrayList<>();
-        expectedTasks.add(new TaskEntitie("pending", null, "high", "John Doe"));
+        List<TaskEntity> expectedTasks = new ArrayList<>();
+        expectedTasks.add(new TaskEntity());
         when(taskService.list()).thenReturn(expectedTasks);
 
         // Act
-        ResponseEntity<List<TaskEntitie>> responseEntity = taskController.list();
+        ResponseEntity<List<TaskEntity>> responseEntity = taskController.list();
 
         // Assert
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
@@ -59,11 +60,11 @@ class TaskControllerTest {
 
     @Test
     public void testUpdateTask() {
-        List<TaskEntitie> updatedTasks = new ArrayList<>();
+        List<TaskEntity> updatedTasks = new ArrayList<>();
 
-        when(taskService.update(any(TaskEntitie.class))).thenReturn(updatedTasks);
+        when(taskService.update(any(TaskEntity.class))).thenReturn(updatedTasks);
 
-        ResponseEntity<List<TaskEntitie>> responseEntity = taskController.update(new TaskEntitie("pending", null, "high", "John Doe"));
+        ResponseEntity<List<TaskEntity>> responseEntity = taskController.update(new TaskEntity());
 
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 
@@ -76,7 +77,7 @@ class TaskControllerTest {
         Long taskId = 1L;
 
         // Act
-        ResponseEntity<List<TaskEntitie>> responseEntity = taskController.delete(taskId);
+        ResponseEntity<List<TaskEntity>> responseEntity = taskController.delete(taskId);
 
         // Assert
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
