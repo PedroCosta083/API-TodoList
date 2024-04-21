@@ -1,0 +1,11 @@
+pedro\costa\TaskManagerAPI\service\TaskService.class
+pedro\costa\TaskManagerAPI\controller\UserController.class
+pedro\costa\TaskManagerAPI\controller\TaskController.class
+pedro\costa\TaskManagerAPI\TaskManagerApiApplication.class
+pedro\costa\TaskManagerAPI\entities\UserEntitie.class
+pedro\costa\TaskManagerAPI\repository\UserRepository.class
+pedro\costa\TaskManagerAPI\entities\CategoryEntitie.class
+pedro\costa\TaskManagerAPI\repository\TaskRepository.class
+pedro\costa\TaskManagerAPI\entities\BaseEntity.class
+pedro\costa\TaskManagerAPI\service\UserService.class
+pedro\costa\TaskManagerAPI\entities\TaskEntity.class
