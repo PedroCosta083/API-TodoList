@@ -1,0 +1,9 @@
+FROM adoptopenjdk/openjdk17:alpine-jre
+
+COPY target/Task-Manager-API-0.0.1-SNAPSHOT.jar /app/Task-Manager-API.jar
+
+WORKDIR /app
+
+EXPOSE 8080
+
+CMD ["java", "-jar", "Task-Manager-API.jar"]
